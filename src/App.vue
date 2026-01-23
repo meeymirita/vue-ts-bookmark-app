@@ -1,37 +1,42 @@
 <script setup lang="ts">
+import ProfileAvatar from '@/components/ProfileAvatar.vue'
+import { onMounted, ref } from 'vue'
+import type { Profile } from '@/interfaces/profile.ts'
+import { API_ROUTES } from '@/api/api.ts'
+
+const profile = ref<Profile | undefined>()
+
+async function fetchProfileAvatar() {
+  const data = await fetch(API_ROUTES.profile);
+  const res =  (await data.json()) as Profile;
+  profile.value = res;
+}
+
+onMounted(() => {
+  fetchProfileAvatar()
+});
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-  </header>
+<div class="app-container">
+  <nav class="navigation">
+    <ProfileAvatar v-if="profile" :name="profile?.name" />
+  </nav>
+  <main>Контер</main>
+</div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.app-container{
+  display: flex;
+  min-height: calc(100vh - 140px);
+  gap: 200px;
+  max-width: 1450px;
+  margin: 140px auto 0 auto;
+
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.navigation{
+  min-width: 400px;
 }
 </style>
