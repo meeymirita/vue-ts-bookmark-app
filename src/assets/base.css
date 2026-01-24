@@ -2,6 +2,7 @@
 :root {
   --color-bg: #FFFFFF;
   --color-fg: #1C1C1C;
+  --color-fg-hover: #9f9f9f;
   --color-inactive: rgba(28, 28, 28, 0.4);
 }
 *,
